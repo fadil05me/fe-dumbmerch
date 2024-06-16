@@ -76,7 +76,7 @@ pipeline {
                         echo "Using version: \${version}"
                         
                         # Run Docker container using the retrieved version
-                        docker run -d --name testcode -p 3000:80 "${REGISTRY_URL}/${IMAGE_NAME}:\${version}"
+                        docker run -d --name testcode-fe -p 3009:80 "${REGISTRY_URL}/${IMAGE_NAME}:\${version}"
                         echo "Docker container started with image tag: \${version}"
                         
                         exit
@@ -93,14 +93,14 @@ pipeline {
                     sshagent(credentials: ['sshkey']) {
                         sh """
                             ssh -p ${SSH_PORT} -o StrictHostKeyChecking=no ${BUILD_SERVER} << 'EOF'
-                            if wget --spider http://localhost:3000 >/dev/null 2>&1; then
+                            if wget --spider http://localhost:3009 >/dev/null 2>&1; then
                                 echo "Website is up!"
                             else
                                 echo "Website is down!"
-                                docker rm -f testcode
+                                docker rm -f testcode-fe
                                 exit 1
                             fi
-                            docker rm -f testcode
+                            docker rm -f testcode-fe
                             echo "Selesai Testing!"
                             exit
                             EOF
