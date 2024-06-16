@@ -68,7 +68,7 @@ pipeline {
                     sshagent(credentials: ['sshkey']) {
                         // Read version from file and run Docker container
                         sh """
-                        ssh -p ${BUILD_SERVER} -o StrictHostKeyChecking=no ${BUILD_SERVER} << 'EOF'
+                        ssh -p ${SSH_PORT} -o StrictHostKeyChecking=no ${BUILD_SERVER} << 'EOF'
                         cd ${DIRECTORY}
                         
                         # Read version from file
@@ -92,7 +92,7 @@ pipeline {
                 script {
                     sshagent(credentials: ['sshkey']) {
                         sh """
-                            ssh -p ${BUILD_SERVER} -o StrictHostKeyChecking=no ${BUILD_SERVER} << 'EOF'
+                            ssh -p ${SSH_PORT} -o StrictHostKeyChecking=no ${BUILD_SERVER} << 'EOF'
                             if wget --spider http://localhost:3000 >/dev/null 2>&1; then
                                 echo "Website is up!"
                             else
@@ -115,7 +115,7 @@ pipeline {
                 script {
                     sshagent(credentials: ['sshkey']) {
                         sh """
-                            ssh -p 1234 -o StrictHostKeyChecking=no finaltask-fadil@40.118.209.246 << 'EOF'
+                            ssh -p 1234 -o StrictHostKeyChecking=no ${BUILD_SERVER} << 'EOF'
                             cd ${DIRECTORY}
                             
                             # Read version from file
