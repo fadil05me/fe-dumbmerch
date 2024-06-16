@@ -14,7 +14,7 @@ WORKDIR /app
 
 COPY --from=build /app .
 
-RUN npm install --only=production
+RUN npm install --omit=dev
 
 EXPOSE 3000
 
