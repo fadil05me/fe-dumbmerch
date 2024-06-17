@@ -8,14 +8,12 @@ RUN npm install
 
 COPY . .
 
-FROM node:16-alpine
+RUN npm run build
 
-WORKDIR /app
+FROM nginx:alpine
 
-COPY --from=build /app .
+COPY --from=build /app/build /usr/share/nginx/html
 
-RUN npm install --omit=dev
+EXPOSE 80
 
-EXPOSE 3000
-
-CMD ["npm", "start"]
+CMD ["nginx", "-g", "daemon off;"]
