@@ -77,7 +77,7 @@ pipeline {
                         echo "Using version: \${version}"
                         
                         # Run Docker container using the retrieved version
-                        docker run -d --name testcode-fe-prod -p 3010:3000 "${REGISTRY_URL}/${IMAGE_NAME}:\${version}"
+                        docker run -d --name testcode-fe-prod -p 3010:80 "${REGISTRY_URL}/${IMAGE_NAME}:\${version}"
                         echo "Docker container started with image tag: \${version}"
                         
                         exit
