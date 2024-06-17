@@ -116,7 +116,7 @@ pipeline {
                 script {
                     sshagent(credentials: ['sshkey']) {
                         sh """
-                            ssh -p 1234 -o StrictHostKeyChecking=no finaltask-fadil@40.118.209.246 << 'EOF'
+                            ssh -p ${SSH_PORT} -o StrictHostKeyChecking=no ${BUILD_SERVER} << 'EOF'
                             cd ${DIRECTORY}
                             
                             # Read version from file
